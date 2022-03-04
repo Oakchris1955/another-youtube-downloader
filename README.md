@@ -1,2 +1,2 @@
 # easier-youtube-downloader
- A repository to download Youtube videos with ease
+ A repository to download Youtube videos easily
