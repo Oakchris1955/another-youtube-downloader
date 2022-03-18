@@ -1,10 +1,12 @@
-# Easier Youtube Downloader
+# Another Youtube Downloader
  A GUI tool to download Youtube videos easily
 ## Installation
 1. Install Python 3 from https://www.python.org/downloads/
 2. Download Git from https://git-scm.com/
-3. Open command line and type `python3 -m pip install yt-dlp` for Linux or `pip install yt-dlp` for Windows and wait for it to finish
-4. `cd` to the directory you wanna download the program and type `git clone https://github.com/Oakchris1955/easier-youtube-downloader`
+3. (Skip this if you have Linux) Install Choco from https://chocolatey.org/
+4. Open command line and type `python3 -m pip install yt-dlp` for Linux or `pip install yt-dlp` for Windows and wait for it to finish
+5. Type `choco install ffmpeg` (type `Y` on anything) for Windows or `sudo apt install ffmpeg` for Linuz
+6. `cd` to the directory you wanna download the program and type `git clone https://github.com/Oakchris1955/easier-youtube-downloader`
 ## Running the program
  Just click the `main.py` file. A GUI window will open and a command line window (If you don't want the last one, change the name from `main.py` to `main.pyw`)
 ## Using the program
