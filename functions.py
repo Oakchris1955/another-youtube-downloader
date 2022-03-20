@@ -10,19 +10,25 @@ from time import time
 #import the tkinter module
 import tkinter as tk
 
+#import os module to get download folder
+import os
+
 class functions_class:
 	def __init__(self, UI):
 		self.UI = UI
 		self.lastupdated = time()
 
 	def update_progressbar(self, response):
-		if time()-self.lastupdated>0.75:
+		#if bar was updated less than 0.1 seconds ago, don't update
+		if time()-self.lastupdated>0.1:
+			#check if it is downloading
 			if response['status'] == 'downloading' and 'downloaded_bytes' in response and 'total_bytes' in response:
+				#calculate percent downloaded
 				fragment_downloaded = round(float(response['downloaded_bytes'])/float(response['total_bytes'])*100, 1)
+				#update status bar and label
 				self.UI.downloadbar['value'] = fragment_downloaded
 				progress_text = str(fragment_downloaded)+'% downloaded'
 				self.UI.progress_label.config(text=progress_text)
-				self.UI.root.update_idletasks()
 				self.lastupdated = time()
 		if response['status'] == 'finished':
 			self.UI.progress_label.config(text='Finished downloading')
@@ -38,7 +44,8 @@ class functions_class:
 				'progress_hooks': [self.update_progressbar],
 				'outtmpl': '%(title)s.%(ext)s',
 				'logger': Logger(self.UI),
-				'format':'best'
+				'format':'best',
+				'outtmpl': str(os.path.join( os.getenv('USERPROFILE'), 'Downloads'))+'/'+'%(title)s.%(ext)s'
 			}
 		
 		#update the UI so that the button becomes normal again
