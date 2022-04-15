@@ -23,6 +23,6 @@ class Logger:
 		print(msg)
 	
 	def download(self, msg):
-		if msg.endswith('downloaded'):
-			self.UI.progress_label.config(text='Video already downloaded')
+		#if msg.endswith('downloaded'):
+		#	self.UI.progress_label.config(text='Video already downloaded')
 		print(msg)
