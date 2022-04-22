@@ -29,7 +29,7 @@ class DownloadAborted(Exception):
 	#raisen when download was interrupted by user
 	pass
 
-#main fucntions class
+#main functions class
 class functions_class:
 	def __init__(self, UI):
 		self.UI = UI
@@ -99,7 +99,7 @@ class functions_class:
 				filetype = 'audio'
 
 			#update the status bar
-			self.UI.tree.set(iid, 'Status', f'{fragment_downloaded}% downloaded (of {filetype})')
+			self.UI.tree.set(saved_iid, 'Status', f'{fragment_downloaded}% downloaded (of {filetype})')
 
 		elif response['status'] == 'finished':
 			#check if what is currently downloading is video or audio
@@ -110,7 +110,7 @@ class functions_class:
 
 
 			#if video/audio finished downloading, update status bar
-			self.UI.tree.set(iid, 'Status', f'{filetype} downloaded')
+			self.UI.tree.set(saved_iid, 'Status', f'{filetype} downloaded')
 
 
 
@@ -129,6 +129,14 @@ class functions_class:
 
 			self.UI.video_formats['values'] = ('None')
 			self.UI.video_formats.set('None')
+
+			#also, reset the format info labels
+			self.UI.audio_size.config(text='Filesize of audio:\nNot selected anything yet')
+			self.UI.audio_extension.config(text='Audio extension:\nNot selected anything yet')
+
+			self.UI.video_size.config(text='Filesize of video:\nNot selected anything yet')
+			self.UI.video_extension.config(text='Video extension:\nNot selected anything yet')
+
 
 		elif json.loads(self.UI.tree.item(selection_ids[0])['tags'][0])['status'] == 'Not ready':
 			return
@@ -355,3 +363,24 @@ class functions_class:
 			if values[column_numb] > highest_value:
 				highest_value = values[column_numb]
 		return highest_value
+
+
+#a class to output error while the program is being loaded
+class error_window_class:
+	def __init__(self, root):
+		self.root = root
+
+
+	def output_loading_error(self, label_text: str, error_text: str):
+		#print error_text
+		print(error_text)
+
+		#make a label with label_text and a close window button
+		self.error_icon_label = tk.Label(self.root, text=label_text, borderwidth=1, relief="solid")
+		self.error_icon_label.grid(row=0, column=0)
+
+		self.close_window_button = tk.Button(self.root, text='Close window', command=self.root.destroy)
+		self.close_window_button.grid(row=1, column=0)
+
+if __name__ == '__main__':
+	print('This file is a module. You can\'t run it directly')

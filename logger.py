@@ -26,3 +26,6 @@ class Logger:
 		#if msg.endswith('downloaded'):
 		#	self.UI.progress_label.config(text='Video already downloaded')
 		print(msg)
+
+if __name__ == '__main__':
+	print('This file is a module. You can\'t run it directly')

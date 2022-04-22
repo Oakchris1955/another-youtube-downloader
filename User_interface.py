@@ -8,9 +8,42 @@ from threading import *
 #import the functions module
 from functions import *
 
+#import filetype module to check
+import filetype
+
+#import the os module to do various checks
+import os
+
 class MainUI:
 	def __init__(self, root):
 		self.root = root
+
+		#change the window name
+		self.root.title('Another Youtube Downloader - Made by Oakchris1955 and MoDerPo')
+
+		#change the window icon
+		#first, check if the icon image is there
+		if not os.path.isfile('images/icon.png'):
+			#if it isn't, import error_window_class from functions
+			error_functions = error_window_class(self.root)
+			
+			#then, output that no image was found
+			error_functions.output_loading_error('Error while opening "icon.png". Please make sure it is in folder "images". Else, repeat the installation progress', 'Error while opening "icon.png"')
+			return
+		
+		#if it exists, check if it a valid image
+		elif not filetype.is_image('images/icon.png'):
+			#if it isn't, import error_window_class from functions
+			error_functions = error_window_class(self.root)
+
+			#then output that "icon.png" isn't a valid image
+			error_functions.output_loading_error('Error while opening "icon.png". It isn\'t a valid image. Please repeat the installation progress', 'Error while opening "icon.png"')
+			return
+
+		#if both of these are true, change the window icon
+		else:
+			self.root.iconphoto(False, tk.PhotoImage(file='images/icon.png'))
+
 
 		#make a table to show the links
 		self.tree = ttk.Treeview(self.root, columns=('Number', 'Name', 'URL', 'Status'), height=5, show='headings')
@@ -43,11 +76,11 @@ class MainUI:
 		self.audio_formats.grid(row=0, column=0, columnspan=2, pady=10, padx=5)
 
 		#audio format properties
-		self.audio_size = tk.Label(self.options_frame, text='Audio info unavailable')
+		self.audio_size = tk.Label(self.options_frame, text='Filesize of audio:\nNot selected anything yet')
 		self.audio_size.grid(row=1, column=0)
 
 		#audio format extension
-		self.audio_extension = tk.Label(self.options_frame, text='Audio info unavailable')
+		self.audio_extension = tk.Label(self.options_frame, text='Audio extension:\nNot selected anything yet')
 		self.audio_extension.grid(row=1, column=1)
 
 
@@ -58,11 +91,11 @@ class MainUI:
 		self.video_formats.grid(row=2, column=0, columnspan=2, pady=10, padx=5)
 
 		#video format properties
-		self.video_size = tk.Label(self.options_frame, text='Video info unavailable')
+		self.video_size = tk.Label(self.options_frame, text='Filesize of video:\nNot selected anything yet')
 		self.video_size.grid(row=3, column=0)
 
 		#video format extension
-		self.video_extension = tk.Label(self.options_frame, text='Video info unavailable')
+		self.video_extension = tk.Label(self.options_frame, text='Video extension:\nNot selected anything yet')
 		self.video_extension.grid(row=3, column=1)
 
 
@@ -99,3 +132,6 @@ class MainUI:
 
 		#initialize the function class
 		functions = functions_class(self)
+
+if __name__ == '__main__':
+	print('This file is a module. You can\'t run it directly')
